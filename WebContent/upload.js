@@ -208,17 +208,22 @@ function UploadDemoJsSDK() {
                 if (parentPath.charAt(0) == "/") {
                     parentPath = parentPath.substr(1, parentPath.length);
                 }
-                console.log("delete locate before", localStorage.getItem(bucket + ":" + parentPath));
-                //console.log("delete locate before", localStorage.getItem(bucket + ":" + parentPath + "_token"));
-                ctx = '';
-                localStorage.removeItem(bucket + ":" + parentPath);
-                localStorage.removeItem(bucket + ":" + parentPath + "_token");
-                console.log("delete locate after", localStorage.getItem(bucket + ":" + parentPath));
-                //console.log("delete locate after", localStorage.getItem(bucket + ":" + parentPath + "_token"));
-                uploader.removeFile(pobj.data("fileid"));
+                parentPath = bucket + ":" + parentPath;
+                console.log("delete locate before", localStorage.getItem(parentPath + ":" + fileId));
+                localStorage.removeItem(parentPath + ":" + fileId);
+                localStorage.removeItem(parentPath + ":" + fileId + "_ctx");
+                console.log("delete locate after", localStorage.getItem(parentPath + ":" + fileId));
+                //uploader.stop();
+                //console.log("uploader.stop", uploader.files.length);
+
+                uploader.removeFile(fileId);
+                console.log("uploader.removeFile", fileId);
                 pobj.remove();
                 if (uploader.files.length < 1) {
                     $(".upload_filelist .nulltip").show();
+                    //}else{
+                    //    uploader.start();
+                    //    console.log("uploader.start", uploader.files.length);
                 }
             }
         });
@@ -242,9 +247,6 @@ function UploadDemoJsSDK() {
             },
             init: {
                 PostInit: function () {
-                    //if (window.localStorage) {
-                    //    localStorage.clear();
-                    //}
                     $("#uploadFile").on("click", function () {
                         if (uploader.total.queued < 1) {
                             BUI.Message.Alert('您还未选择配置文件！')
@@ -259,6 +261,7 @@ function UploadDemoJsSDK() {
                 FilesAdded: function (up, files) {
                     var htmlstr = "";
                     plupload.each(files, function (file) {
+                        console.log("添加文件:", file.name + ":" + file.id);
                         htmlstr += '<tr data-fileid=' + file.id + ' data-start=' + Date.parse(new Date()) + '>\
 								<td>\
 									<div class="filename" id="fileName_' + file.id + '"  style="overflow:hidden;width:350px">' + file.name + '</div>\
@@ -276,7 +279,7 @@ function UploadDemoJsSDK() {
 								</td>\
 								<td width="50" class="filectrl_td22">\
 								</td>\
-							</tr>'
+							</tr>';
                     });
                     $(".upload_filelist .nulltip").hide();
                     $("#uploadFileTable tbody").append(htmlstr);
@@ -327,9 +330,8 @@ function UploadDemoJsSDK() {
                         item.find(".filectrl_td").html("<a href='javascript:;' class='button button-darkblue'>续传</a>");
                         item.find(".filectrl_td a").on("click", function () {
                             $(this).parents("tr").remove();
-                            err.file.status = 2;
+                            err.file.status = 1;
                             uploader.addFile(err.file);
-                            //uploader.start();
                         });
                         item.find(".filectrl_td22").html("<a href='javascript:;' class='button button-darkblue'>重新上传</a>");
                         item.find(".filectrl_td22 a").on("click", function () {
@@ -339,21 +341,18 @@ function UploadDemoJsSDK() {
                             if (parentPath.charAt(0) == "/") {
                                 parentPath = parentPath.substr(1, parentPath.length);
                             }
-                            console.log("重新上传 remove key", bucket + ":" + parentPath);
-                            console.log("重新上传 remove key before", localStorage.getItem(bucket + ":" + parentPath));
-                            //console.log("重新上传 remove key before", localStorage.getItem(bucket + ":" + parentPath + "_token"));
-                            localStorage.removeItem(bucket + ":" + parentPath);
-                            //localStorage.removeItem(bucket + ":" + parentPath + "_token");
-                            console.log("重新上传 remove key after", localStorage.getItem(bucket + ":" + parentPath));
-                            //console.log("重新上传 remove key after", localStorage.getItem(bucket + ":" + parentPath + "_token"));
+                            parentPath = bucket + ":" + parentPath;
+                            console.log("重新上传 remove key", parentPath + ":" + err.file.id);
+                            console.log("重新上传 remove key before", localStorage.getItem(parentPath + ":" + err.file.id));
+                            localStorage.removeItem(parentPath + ":" + err.file.id);
+                            localStorage.removeItem(parentPath + ":" + err.file.id + "_ctx");
+                            console.log("重新上传 remove key after", localStorage.getItem(parentPath + ":" + err.file.id));
                             $(this).parents("tr").remove();
-                            err.file.status = 2;
+                            err.file.status = 1;
                             err.file.offset = 0;
                             err.file.percent = 0;
                             err.file.loaded = 0;
-                            ctx = '';
                             uploader.addFile(err.file);
-                            //uploader.start();
                         });
                     }
                     //document.getElementById('console').innerHTML += "\nError #" + err.code + ": " + err.message;
@@ -374,7 +373,6 @@ function UploadDemoJsSDK() {
         that.token = '';
         that.key_handler = typeof op.init.Key === 'function' ? op.init.Key : '';
         //this.domain = op.domain;
-        var ctx = '';
         var bucket = $("#bucketNameId").val();
         var parentFilePath = $("#parentPathId").val();
         var fullFileName = '';
@@ -382,7 +380,6 @@ function UploadDemoJsSDK() {
         var akId = $("#akId").val();
         var overwrite = 0;
         var uploadStartTime = Date.parse(new Date());
-        var uploadBatch='';
 
         var reset_chunk_size = function () {
             var ie = that.detectIEVersion();
@@ -430,6 +427,7 @@ function UploadDemoJsSDK() {
                 var ajax = that.createAjax();
 
                 var uptoken_url = that.uptoken_url + "?bucket=" + bucket + "&key=" + that.URLSafeBase64Encode(fullFileName) + "&overwrite=" + overwrite  + "&expire="+expire.getTime()+"&ak=" + akId ;
+                console.log('uptoken_url:', uptoken_url);
                 ajax.open('GET', uptoken_url, false);
                 ajax.onreadystatechange = function () {
                     if (ajax.readyState === 4 && ajax.status === 200) {
@@ -475,8 +473,6 @@ function UploadDemoJsSDK() {
         });
 
         uploader.bind('FilesAdded', function (up, files) {
-            uploadBatch = new Date().getTime();
-            console.log("uploadBatch is "+uploadBatch);
             var auto_start = up.getOption && up.getOption('auto_start');
             auto_start = auto_start || (up.settings && up.settings.auto_start);
             if (auto_start) {
@@ -492,8 +488,7 @@ function UploadDemoJsSDK() {
                 fullFileName = fullFileName.substr(1, fullFileName.length);
             }
             fullFileName = bucket + ":" + fullFileName;
-            console.log('BeforeUpload fullFileName:', fullFileName);
-
+            console.log('BeforeUpload fullFileName:', fullFileName + ":" + file.id);
             getUpToken(file.name);
             if(that.token == ''){
                 _Error_Handler(up, err, "获取token失败!");
@@ -544,7 +539,7 @@ function UploadDemoJsSDK() {
                     console.log('BeforeUpload directUpload file.size:', file.size);
                     directUpload(up, file, that.key_handler);
                 } else {
-                    var localFileInfo = localStorage.getItem(fullFileName);
+                    var localFileInfo = localStorage.getItem(fullFileName + ":" + file.id);
                     var blockSize = chunk_size;
                     console.log('BeforeUpload localFileInfo:', localFileInfo);
                     if (localFileInfo) {
@@ -557,21 +552,24 @@ function UploadDemoJsSDK() {
                                 if (file.size === localFileInfo.total) {
                                     file.percent = localFileInfo.percent;
                                     file.loaded = localFileInfo.offset;
-                                    ctx = localFileInfo.ctx;
+                                    //ctx = localFileInfo.ctx;
                                     if (localFileInfo.offset + blockSize > file.size) {
                                         blockSize = file.size - localFileInfo.offset;
                                     }
                                 } else {
-                                    localStorage.removeItem(fullFileName);
+                                    localStorage.removeItem(fullFileName + ":" + file.id);
+                                    localStorage.removeItem(fullFileName + ":" + file.id + "_ctx");
                                 }
 
                             } else {
                                 // 进度100%时，删除对应的localStorage，避免 499 bug
-                                localStorage.removeItem(fullFileName);
+                                localStorage.removeItem(fullFileName + ":" + file.id);
+                                localStorage.removeItem(fullFileName + ":" + file.id + "_ctx");
 
                             }
                         } else {
-                            localStorage.removeItem(fullFileName);
+                            localStorage.removeItem(fullFileName + ":" + file.id);
+                            localStorage.removeItem(fullFileName + ":" + file.id + "_ctx");
                         }
                     }
                     console.log("before mkblk offset", file.percent);
@@ -583,7 +581,7 @@ function UploadDemoJsSDK() {
                             'required_features': "chunks",
                             'headers': {
                                 'Authorization': 'UpToken ' + that.token,
-                                'uploadBatch':uploadBatch
+                                'uploadBatch': file.id
                             },
                             'multipart_params': {}
                         });
@@ -598,7 +596,9 @@ function UploadDemoJsSDK() {
 
         uploader.bind('ChunkUploaded', function (up, file, info) {
             var res = that.parseJSON(info.response);
+            var ctx = localStorage.getItem(fullFileName + ":" + file.id + "_ctx");
             ctx = ctx ? ctx + ',' + res.ctx : res.ctx;
+            localStorage.setItem(fullFileName + ":" + file.id + "_ctx", ctx);
             var leftSize = info.total - info.offset;
             var chunk_size = up.getOption && up.getOption('chunk_size');
             chunk_size = chunk_size || (up.settings && up.settings.chunk_size);
@@ -607,13 +607,14 @@ function UploadDemoJsSDK() {
                     'url': upload_url + '/mkblk/' + leftSize
                 });
             }
-            localStorage.setItem(fullFileName, JSON.stringify({
+            localStorage.setItem(fullFileName + ":" + file.id, JSON.stringify({
                 ctx: ctx,
                 percent: file.percent,
                 total: info.total,
                 offset: info.offset,
                 time: (new Date()).getTime()
             }));
+            console.log('ChunkUploaded localFileInfo:', localStorage.getItem(fullFileName + ":" + file.id));
         });
 
         uploader.bind('Error', (function (_Error_Handler) {
@@ -702,9 +703,10 @@ function UploadDemoJsSDK() {
             return function (up, file, info) {
 
                 var last_step = function (up, file, info) {
-                    ctx = '';
-                    localStorage.removeItem(fullFileName);
-                    console.log("FileUploaded remove after", localStorage.getItem(fullFileName));
+                    console.log("FileUploaded remove before", localStorage.getItem(fullFileName + ":" + file.id));
+                    localStorage.removeItem(fullFileName + ":" + file.id);
+                    localStorage.removeItem(fullFileName + ":" + file.id + "_ctx");
+                    console.log("FileUploaded remove after", localStorage.getItem(fullFileName + ":" + file.id));
                     var item = $("#statu_" + file.id);
                     if (file.percent >= 100) {
                         item.html("<span class='upload_success'>上传完成</span>");
@@ -713,6 +715,7 @@ function UploadDemoJsSDK() {
                 };
                 console.log('FileUploaded info:', info.response);
                 var res;
+                var ctx = localStorage.getItem(fullFileName + ":" + file.id + "_ctx");
                 try{
                     res = that.parseJSON(info.response);
                     ctx = ctx ? ctx : res.ctx;
@@ -754,11 +757,12 @@ function UploadDemoJsSDK() {
                     ajax.open('POST', url, false);
                     ajax.setRequestHeader('Content-Type', 'text/plain;charset=UTF-8');
                     ajax.setRequestHeader('Authorization', 'UpToken ' + that.token);
-                    ajax.setRequestHeader('uploadBatch',uploadBatch);
+                    ajax.setRequestHeader('uploadBatch', file.id);
                     var onreadystatechange = function () {
                         console.log('ajax.readyState '+ajax.readyState+" ajax.status " +ajax.status);
                         if (ajax.readyState === 4) {
-                            localStorage.removeItem(fullFileName);
+                            localStorage.removeItem(fullFileName + ":" + file.id);
+                            localStorage.removeItem(fullFileName + ":" + file.id + "_ctx");
                             if (ajax.status === 200) {
                                 var info = ajax.responseText;
                                 last_step(up, file, info);

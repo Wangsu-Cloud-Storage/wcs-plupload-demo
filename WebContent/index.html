@@ -17,28 +17,27 @@
 			<div><br></div>
 			<div>
 				<label>上传url[网宿云存储分配的上传地址]：</label>
-				<input type="text" id="uploadUrlId" value="http://test.up0.v1.wcsapi.com:82" readonly="readonly"/>
+				<input type="text" id="uploadUrlId" value="<your uploadDomain>" readonly="readonly"/>
 			</div>
 			<div><br></div>
 			<div>
 				<label>获取tokenURL[后台服务器获取token的url]：</label>
-				<!--<input type="text" id="getTokenUrlId" value="http://plupload.test.com/si/user/file/buildToken" readonly="readonly"/>-->
-				<input type="text" id="getTokenUrlId" value="http://demo.com:81/getUploadToken" readonly="readonly"/>
+				<input type="text" id="getTokenUrlId" value="<your url for get token>" readonly="readonly"/>
 			</div>
 			<div><br></div>
 			<div>
 				<label>用户的AK[AK]：</label>
-				<input type="text" id="akId" value="3759349ca932b27147dd76fc509835a19cfeeec9" readonly="readonly"/>
+				<input type="text" id="akId" value="<your ak>" readonly="readonly"/>
 			</div>
 			<div><br></div>
 			<div>
 				<label>指定保存的空间[格式bucketName]：</label>
-				<input type="text" id="bucketNameId" value="plupload-test" readonly="readonly"/>
+				<input type="text" id="bucketNameId" value="<your bucket name>" readonly="readonly"/>
 			</div>
 			<div><br></div>
 			<div>
 				<label>指定保存的文件夹[格式为dir1/dir2]：</label>
-				<input type="text" id="parentPathId" value="plupload" readonly="readonly"/>
+				<input type="text" id="parentPathId" value="<your folder name>" readonly="readonly"/>
 			</div>
 			<div><br></div>
 		</div>
@@ -65,6 +64,8 @@
 	<script type="text/javascript" src="js/plupload/plupload.full.min.js"></script>
 	<script type="text/javascript" src="upload.js"></script>
 	<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+	<!--<script type="text/javascript" src="js/jquery-1.6.2.js"></script>-->
+
 	<script type="text/javascript">
 		var uploader = UploadDemo.uploader({});
 	</script>
