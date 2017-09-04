@@ -11,9 +11,9 @@
 #### demo部署
 一、服务端准备
 1. 本 SDK 依赖服务端颁发的上传凭证，可以通过以下方式实现：
-利用网宿云存储服务端 SDK 构建后端服务，提供一个获取token的URL 地址，供wcs-plupload初始化使用，前端通过 Ajax 请求该地址后获得 uptoken。 Ajax 请求成功后，服务端将token直接以字符串形式返回。例如 ：
+利用网宿云存储服务端 SDK 构建后端服务，提供一个获取token的URL 地址，供wcs-plupload初始化使用，前端通过 Ajax 请求该地址后获得 uptoken。 Ajax 请求成功后，服务端将token直接以字符串形式原样返回（不能添加双引号等其它字符）。例如 ：
 ```
-"115bd5294d15cf22f5bba8ec93276f1a7d2..."
+115bd5294d15cf22f5bba8ec93276f1a7d2...
 *注：解析返回字符串的内容值为uptoken，即上例中uptoken为115bd5294d15cf22f5bba8ec93276f1a7d2...*
 ```
 
