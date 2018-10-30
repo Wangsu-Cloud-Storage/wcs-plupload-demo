@@ -41,7 +41,7 @@
 ![](https://wcsd.chinanetcenter.com/guide-plupload-pics/wcs-plupload-demo3.png)
 
 #### 插件集成
-1. 导入plupload插件对应的文件(plupload文件夹下的文件)，引入网宿云存储的SDK(upload.js)
+1. 导入plupload插件对应的文件(plupload文件夹下的文件)，引入网宿云存储的SDK(upload.js)，如下图
 
 ![](https://wcsd.chinanetcenter.com/guide-plupload-pics/wcs-plupload-demo4.png)
 
