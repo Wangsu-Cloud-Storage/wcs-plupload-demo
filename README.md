@@ -43,7 +43,7 @@
 #### 插件集成
 1. 导入plupload插件对应的文件(plupload文件夹下的文件)，引入网宿云存储的SDK(upload.js)
 
-![](https://wcsd.chinanetcenter.com/guide-plupload-pics/wcs-plupload-demo4.png)
+![]（https://wcsd.chinanetcenter.com/guide-plupload-pics/wcs-plupload-demo4.png）
 
 2. 在html文件中引入相应的js
 
