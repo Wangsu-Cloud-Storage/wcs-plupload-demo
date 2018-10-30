@@ -27,7 +27,7 @@
 1. apache-tomcat-8.5.2\webapps\ROOT目录下文件清空
 2. 将plupload-demo\WebContent\下的所有文件拷贝到apache-tomcat-8.5.2\webapps\ROOT目录下
 3. 启动tomcat
-4. 访问http://127.0.0.1:8080/index.html，界面如下图
+4. 访问index.html，界面如下图
 
 ![](https://wcsd.chinanetcenter.com/guide-plupload-pics/wcs-plupload-demo2.png)
 
@@ -35,8 +35,7 @@
 1. 点击[文件上传]
 2. 弹出文件选择窗口
 3. 选择要上传的文件
-4. 文件开始上传
-文件上传成功，如下图所示
+4. 文件开始上传，文件上传成功，如下图所示
 
 ![](https://wcsd.chinanetcenter.com/guide-plupload-pics/wcs-plupload-demo3.png)
 
