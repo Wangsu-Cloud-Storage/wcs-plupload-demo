@@ -32,7 +32,7 @@
 ![index](https://wcsd.chinanetcenter.com/guide-plupload-pics/wcs-plupload-demo2.png)
 
 四、文件上传
-1. 点击[文件上传]
+1. 点击'文件上传'
 2. 弹出文件选择窗口
 3. 选择要上传的文件
 4. 文件开始上传，文件上传成功，如下图所示
@@ -40,7 +40,7 @@
 ![文件上传](https://wcsd.chinanetcenter.com/guide-plupload-pics/wcs-plupload-demo3.png)
 
 #### 插件集成
-1. 导入plupload插件对应的文件(plupload文件夹下的文件)，引入网宿云存储的SDK(upload.js)，如下图
+1. 导入plupload文件夹下的文件，引入网宿云存储的SDK中的upload.js，如下图
 
 ![导入插件文件](https://wcsd.chinanetcenter.com/guide-plupload-pics/wcs-plupload-demo4.png)
 
