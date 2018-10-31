@@ -20,7 +20,7 @@
 二、配置信息修改
 1. 修改plupload-demo\WebContent\index.html，如下图红框配置信息
 
-![修改配置](https://wcsd.chinanetcenter.com/guide-plupload-pics/wcs-plupload-demo1.png)
+![修改配置](http://wcsd.chinanetcenter.com/guide-plupload-pics/wcs-plupload-demo1.png)
 
 三、plupload-demo发布
 如tomcat发布步骤
@@ -30,7 +30,7 @@
 3. 启动tomcat
 4. 访问index.html，界面如下图
 ```
-![index](https://wcsd.chinanetcenter.com/guide-plupload-pics/wcs-plupload-demo2.png)
+![index](http://wcsd.chinanetcenter.com/guide-plupload-pics/wcs-plupload-demo2.png)
 
 四、文件上传
 ```
@@ -39,21 +39,21 @@
 3. 选择要上传的文件
 4. 文件开始上传，文件上传成功，如下图所示
 ```
-![文件上传](https://wcsd.chinanetcenter.com/guide-plupload-pics/wcs-plupload-demo3.png)
+![文件上传](http://wcsd.chinanetcenter.com/guide-plupload-pics/wcs-plupload-demo3.png)
 
 #### 插件集成
 
 1. 导入plupload文件夹下的文件，引入网宿云存储的SDK中的upload.js，如下图
 
-![导入插件文件](https://wcsd.chinanetcenter.com/guide-plupload-pics/wcs-plupload-demo4.png)
+![导入插件文件](http://wcsd.chinanetcenter.com/guide-plupload-pics/wcs-plupload-demo4.png)
 
 2. 在html文件中引入相应的js
 
-![引入js](https://wcsd.chinanetcenter.com/guide-plupload-pics/wcs-plupload-demo5.png)
+![引入js](http://wcsd.chinanetcenter.com/guide-plupload-pics/wcs-plupload-demo5.png)
 
 3. 初始化uploader（请确保在执行初始化时，页面已经引入 plupload），如下
 
-![初始化uploader](https://wcsd.chinanetcenter.com/guide-plupload-pics/wcs-plupload-demo6.png)
+![初始化uploader](http://wcsd.chinanetcenter.com/guide-plupload-pics/wcs-plupload-demo6.png)
   
 #### plupload常见错误码
 |属性名称|描述|
