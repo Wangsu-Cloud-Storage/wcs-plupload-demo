@@ -23,7 +23,7 @@
 ![](https://wcsd.chinanetcenter.com/guide-plupload-pics/wcs-plupload-demo1.png)
 
 三、plupload-demo发布
-如tomcat发布步骤，可参考[tomcat官网]
+如tomcat发布步骤，可参考[tomcat官网](http://tomcat.apache.org/)
 1. apache-tomcat-8.5.2\webapps\ROOT目录下文件清空
 2. 将plupload-demo\WebContent\下的所有文件拷贝到apache-tomcat-8.5.2\webapps\ROOT目录下
 3. 启动tomcat
